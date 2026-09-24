@@ -53,7 +53,7 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
       <button class="sec" onclick="login('rapjungle')">Admin Rap Jungle</button>
       <button class="sec" onclick="login('production')">Portail Production</button>
       <a class="buttonlink mail" href="mailto:meydenprudhomme95@gmail.com?subject=Rap%20Jungle%20-%20Demande%20merch">Écrire à MEYDEN</a>
-      <p class="note">L’admin Rap Jungle utilise maintenant un compte MEYDEN dédié, sécurisé côté serveur. Le portail Production demeure séparé. Cette version demeure indépendante du Service 360.</p>
+      <p class="note">L’admin Rap Jungle utilise un compte MEYDEN dédié directement intégré à cette application. Le portail Production demeure séparé. Cette version demeure indépendante du Service 360.</p>
     </div>
     <div class="hero-art">🌿🦁🌿</div>
   </div>
@@ -143,33 +143,21 @@ function login(r){
   }
 }
 async function check(){
-  const identity=$("pseudo").value.trim();
+  const identity=$("pseudo").value.trim().toLowerCase();
   const secret=$("code").value.trim();
   $("loginMsg").textContent="";
   if(loginRole=="rapjungle"){
-    if(!identity||!secret){$("loginMsg").textContent="Entre ton courriel admin et ton mot de passe.";return}
-    const btn=$("loginSubmit");
-    btn.disabled=true;btn.textContent="CONNEXION...";
-    try{
-      const r=await fetch("/api/artifact-admin",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({email:identity,password:secret})
-      });
-      const j=await r.json();
-      if(!r.ok||!j.ok)throw new Error(j.error||"Connexion refusée");
+    if(identity==="meydenprudhomme95@gmail.com" && secret==="1984"){
       role="rapjungle";
-      sessionStorage.setItem("rj_artifact_admin",JSON.stringify({email:j.admin.email,name:j.admin.name}));
+      sessionStorage.setItem("rj_artifact_admin",JSON.stringify({email:identity,name:"MEYDEN"}));
       show("admin");
-      $("adminTitle").innerText="Admin Rap Jungle — "+j.admin.name;
-    }catch(e){
-      $("loginMsg").textContent=e.message||"Connexion refusée";
-    }finally{
-      btn.disabled=false;btn.textContent="Entrer";
+      $("adminTitle").innerText="Admin Rap Jungle — MEYDEN";
+    }else{
+      $("loginMsg").textContent="Courriel ou mot de passe incorrect.";
     }
     return;
   }
-  if(secret=="2026"){
+  if(secret==="2026"){
     role="production";
     show("admin");
     $("adminTitle").innerText="Portail Production";
