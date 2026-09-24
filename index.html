@@ -53,7 +53,7 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
       <button class="sec" onclick="login('rapjungle')">Admin Rap Jungle</button>
       <button class="sec" onclick="login('production')">Portail Production</button>
       <a class="buttonlink mail" href="mailto:meydenprudhomme95@gmail.com?subject=Rap%20Jungle%20-%20Demande%20merch">Écrire à MEYDEN</a>
-      <p class="note">Codes démo : Rap Jungle <b>1984</b> / Production <b>2026</b>. Cette version demeure indépendante du Service 360.</p>
+      <p class="note">L’admin Rap Jungle utilise maintenant les mêmes comptes et les mêmes codes que l’application 16 Bars Challenge. Le portail Production demeure séparé. Cette version demeure indépendante du Service 360.</p>
     </div>
     <div class="hero-art">🌿🦁🌿</div>
   </div>
@@ -61,9 +61,12 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
 
 <section id="login" class="card hidden">
   <h2 id="loginTitle">Connexion</h2>
-  <input id="pseudo" placeholder="Nom / pseudo">
-  <input id="code" maxlength="4" inputmode="numeric" placeholder="Code 4 chiffres">
-  <button class="pri" onclick="check()">Entrer</button>
+  <label id="identityLabel">Courriel admin</label>
+  <input id="pseudo" type="email" autocomplete="email" placeholder="Courriel admin">
+  <label id="secretLabel">Code admin</label>
+  <input id="code" type="password" autocomplete="current-password" placeholder="Code admin">
+  <div id="loginMsg" class="note"></div>
+  <button id="loginSubmit" class="pri" onclick="check()">Entrer</button>
   <button class="sec" onclick="show('home')">Retour</button>
 </section>
 
@@ -118,9 +121,68 @@ const $=id=>document.getElementById(id);
 
 function save(){localStorage.setItem("rapjungle_merch_orders",JSON.stringify(orders))}
 function show(id){["home","login","client","admin"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");calc();render()}
-function login(r){loginRole=r;show("login");$("loginTitle").innerText=r=="rapjungle"?"Connexion Rap Jungle":"Connexion Production"}
-function check(){let c=$("code").value;if((loginRole=="rapjungle"&&c=="1984")||(loginRole=="production"&&c=="2026")){role=loginRole;show("admin");$("adminTitle").innerText=role=="rapjungle"?"Admin Rap Jungle":"Portail Production"}else alert("Code incorrect")}
-function logout(){role="";selected=null;$("code").value="";show("home")}
+function login(r){
+  loginRole=r;
+  show("login");
+  $("loginMsg").textContent="";
+  $("code").value="";
+  if(r=="rapjungle"){
+    $("loginTitle").innerText="Connexion Admin Rap Jungle";
+    $("identityLabel").innerText="Courriel admin";
+    $("pseudo").type="email";
+    $("pseudo").placeholder="Courriel admin";
+    $("secretLabel").innerText="Code admin";
+    $("code").placeholder="Même code que sur Rap Jungle 16 Bars";
+  }else{
+    $("loginTitle").innerText="Connexion Production";
+    $("identityLabel").innerText="Nom / pseudo";
+    $("pseudo").type="text";
+    $("pseudo").placeholder="Nom / pseudo";
+    $("secretLabel").innerText="Code production";
+    $("code").placeholder="Code production";
+  }
+}
+async function check(){
+  const identity=$("pseudo").value.trim();
+  const secret=$("code").value.trim();
+  $("loginMsg").textContent="";
+  if(loginRole=="rapjungle"){
+    if(!identity||!secret){$("loginMsg").textContent="Entre ton courriel admin et ton code.";return}
+    const btn=$("loginSubmit");
+    btn.disabled=true;btn.textContent="CONNEXION...";
+    try{
+      const r=await fetch("/api/rj-admin",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({action:"login",adminEmail:identity.toLowerCase(),adminCode:secret})
+      });
+      const j=await r.json();
+      if(!r.ok||j.error)throw new Error(j.error||"Connexion refusée");
+      role="rapjungle";
+      sessionStorage.setItem("rj_artifact_admin",JSON.stringify({email:identity.toLowerCase(),name:j.admin?.name||identity}));
+      show("admin");
+      $("adminTitle").innerText="Admin Rap Jungle — "+(j.admin?.name||identity);
+    }catch(e){
+      $("loginMsg").textContent=e.message||"Connexion refusée";
+    }finally{
+      btn.disabled=false;btn.textContent="Entrer";
+    }
+    return;
+  }
+  if(secret=="2026"){
+    role="production";
+    show("admin");
+    $("adminTitle").innerText="Portail Production";
+  }else{
+    $("loginMsg").textContent="Code incorrect";
+  }
+}
+function logout(){
+  role="";selected=null;
+  sessionStorage.removeItem("rj_artifact_admin");
+  $("code").value="";
+  show("home");
+}
 
 function calc(){
   let q=Number($("qty")?.value)||0,p=Math.ceil(q/2),b=q-p;
