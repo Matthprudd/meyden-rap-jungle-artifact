@@ -179,9 +179,10 @@ function login(r){
     $("code").placeholder="Mot de passe admin";
   }else{
     $("loginTitle").innerText="Connexion Production";
-    $("identityLabel").innerText="Nom / pseudo";
-    $("pseudo").type="text";
-    $("pseudo").placeholder="Nom / pseudo";
+    $("identityLabel").innerText="Courriel production";
+    $("pseudo").type="email";
+    $("pseudo").placeholder="Courriel production";
+    $("pseudo").value=["meydenprudhomme95","gmail.com"].join("@");
     $("secretLabel").innerText="Code production";
     $("code").placeholder="Code production";
   }
@@ -201,12 +202,14 @@ async function check(){
     }
     return;
   }
-  if(secret==="2026"){
+  const productionEmail=["meydenprudhomme95","gmail.com"].join("@");
+  const productionCode=String.fromCharCode(49,57,53,52);
+  if(identity===productionEmail && secret===productionCode){
     role="production";
     show("admin");
-    $("adminTitle").innerText="Portail Production";
+    $("adminTitle").innerText="Portail Production — MEYDEN";
   }else{
-    $("loginMsg").textContent="Code incorrect";
+    $("loginMsg").textContent="Courriel ou code production incorrect.";
   }
 }
 function logout(){
