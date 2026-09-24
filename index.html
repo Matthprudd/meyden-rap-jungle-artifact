@@ -53,7 +53,7 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
       <button class="sec" onclick="login('rapjungle')">Admin Rap Jungle</button>
       <button class="sec" onclick="login('production')">Portail Production</button>
       <a class="buttonlink mail" href="mailto:meydenprudhomme95@gmail.com?subject=Rap%20Jungle%20-%20Demande%20merch">Écrire à MEYDEN</a>
-      <p class="note">L’admin Rap Jungle utilise maintenant les mêmes comptes et les mêmes codes que l’application 16 Bars Challenge. Le portail Production demeure séparé. Cette version demeure indépendante du Service 360.</p>
+      <p class="note">L’admin Rap Jungle utilise maintenant un compte MEYDEN dédié, sécurisé côté serveur. Le portail Production demeure séparé. Cette version demeure indépendante du Service 360.</p>
     </div>
     <div class="hero-art">🌿🦁🌿</div>
   </div>
@@ -132,7 +132,7 @@ function login(r){
     $("pseudo").type="email";
     $("pseudo").placeholder="Courriel admin";
     $("secretLabel").innerText="Code admin";
-    $("code").placeholder="Même code que sur Rap Jungle 16 Bars";
+    $("code").placeholder="Mot de passe admin";
   }else{
     $("loginTitle").innerText="Connexion Production";
     $("identityLabel").innerText="Nom / pseudo";
@@ -147,21 +147,21 @@ async function check(){
   const secret=$("code").value.trim();
   $("loginMsg").textContent="";
   if(loginRole=="rapjungle"){
-    if(!identity||!secret){$("loginMsg").textContent="Entre ton courriel admin et ton code.";return}
+    if(!identity||!secret){$("loginMsg").textContent="Entre ton courriel admin et ton mot de passe.";return}
     const btn=$("loginSubmit");
     btn.disabled=true;btn.textContent="CONNEXION...";
     try{
-      const r=await fetch("/api/rj-admin",{
+      const r=await fetch("/api/artifact-admin",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({action:"login",adminEmail:identity.toLowerCase(),adminCode:secret})
+        body:JSON.stringify({email:identity,password:secret})
       });
       const j=await r.json();
-      if(!r.ok||j.error)throw new Error(j.error||"Connexion refusée");
+      if(!r.ok||!j.ok)throw new Error(j.error||"Connexion refusée");
       role="rapjungle";
-      sessionStorage.setItem("rj_artifact_admin",JSON.stringify({email:identity.toLowerCase(),name:j.admin?.name||identity}));
+      sessionStorage.setItem("rj_artifact_admin",JSON.stringify({email:j.admin.email,name:j.admin.name}));
       show("admin");
-      $("adminTitle").innerText="Admin Rap Jungle — "+(j.admin?.name||identity);
+      $("adminTitle").innerText="Admin Rap Jungle — "+j.admin.name;
     }catch(e){
       $("loginMsg").textContent=e.message||"Connexion refusée";
     }finally{
