@@ -203,9 +203,10 @@ async function check(){
     return;
   }
   const productionEmail=["meydenprudhomme95","gmail.com"].join("@");
-  const productionCode=String.fromCharCode(49,57,53,52);
+  const productionCode=String.fromCharCode(49,57,56,52);
   if(identity===productionEmail && secret===productionCode){
     role="production";
+    sessionStorage.setItem("rj_artifact_production",JSON.stringify({email:identity,name:"MEYDEN"}));
     show("admin");
     $("adminTitle").innerText="Portail Production — MEYDEN";
   }else{
@@ -215,6 +216,7 @@ async function check(){
 function logout(){
   role="";selected=null;
   sessionStorage.removeItem("rj_artifact_admin");
+  sessionStorage.removeItem("rj_artifact_production");
   $("code").value="";
   show("home");
 }
