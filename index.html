@@ -26,8 +26,23 @@ input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0
 button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800;margin:5px;cursor:pointer;text-decoration:none;display:inline-block}
 .pri{background:var(--orange);color:#111}.sec{background:#203024;color:white;border:1px solid #39523f}.ok{background:var(--good);color:#04130a}.bad{background:var(--danger);color:white}.mail{background:var(--yellow);color:#181400}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.hidden{display:none}.box{white-space:pre-line;background:#060b07;border:1px solid #2c4031;border-radius:12px;padding:14px;line-height:1.45}
-.stage{background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.12),transparent 25%),#071009;border:1px solid #33483a;border-radius:18px;padding:28px;display:inline-block;max-width:100%;overflow:hidden}
-.shirt{width:260px;height:320px;background:#050505;border:3px solid #435746;border-radius:60px 60px 25px 25px;position:relative;margin:0 auto}.shirt:before,.shirt:after{content:"";position:absolute;top:55px;width:70px;height:120px;background:inherit;border:3px solid #435746}.shirt:before{left:-54px;transform:rotate(18deg);border-radius:25px}.shirt:after{right:-54px;transform:rotate(-18deg);border-radius:25px}.zone{position:absolute;left:45px;top:75px;width:170px;height:195px;border:2px dashed #708674}.logo{position:absolute;left:55px;top:80px;width:110px;height:90px;border:1px solid var(--orange);border-radius:8px;color:var(--orange);display:flex;align-items:center;justify-content:center;text-align:center;font-weight:bold;cursor:grab;z-index:5;touch-action:none;background:rgba(0,0,0,.15)}.logo img{max-width:100%;max-height:100%;pointer-events:none}
+.stage{background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.12),transparent 25%),#071009;border:1px solid #33483a;border-radius:18px;padding:20px;display:block;max-width:100%;overflow:hidden}
+.mockup-wrap{display:flex;justify-content:center;align-items:center;min-height:390px}.product-mockup{width:300px;height:360px;position:relative;margin:0 auto;background:#050505;border:3px solid #435746;overflow:visible}
+.product-mockup:after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,transparent 49.7%,rgba(255,255,255,.12) 50%,transparent 50.3%),linear-gradient(180deg,transparent 49.7%,rgba(255,255,255,.08) 50%,transparent 50.3%)}
+.product-mockup.tshirt{width:260px;height:320px;border-radius:58px 58px 24px 24px}.product-mockup.tshirt:before,.product-mockup.tshirt .sleeve-r{content:"";position:absolute;top:54px;width:72px;height:118px;background:#050505;border:3px solid #435746;z-index:-1}.product-mockup.tshirt:before{left:-53px;transform:rotate(18deg);border-radius:24px}.product-mockup.tshirt .sleeve-r{right:-53px;transform:rotate(-18deg);border-radius:24px}
+.product-mockup.hoodie{width:270px;height:330px;border-radius:45px 45px 28px 28px}.product-mockup.hoodie:before{content:"";position:absolute;left:72px;top:-44px;width:120px;height:95px;border:3px solid #435746;border-bottom:0;border-radius:60px 60px 18px 18px;background:#050505;z-index:-1}.product-mockup.hoodie .pocket{position:absolute;left:65px;bottom:38px;width:135px;height:62px;border:2px solid #33483a;border-radius:18px 18px 35px 35px}
+.product-mockup.women{width:245px;height:315px;clip-path:polygon(15% 0,37% 0,42% 7%,58% 7%,63% 0,85% 0,100% 22%,84% 34%,80% 100%,20% 100%,16% 34%,0 22%);border-radius:16px}
+.product-mockup.cap{width:280px;height:150px;border-radius:140px 140px 40px 40px;margin-top:80px}.product-mockup.cap:before{content:"";position:absolute;right:-75px;bottom:-12px;width:150px;height:45px;background:#050505;border:3px solid #435746;border-radius:0 80px 80px 0;transform:skewX(-18deg);z-index:-1}
+.product-mockup.beanie{width:210px;height:230px;border-radius:100px 100px 28px 28px;margin-top:55px}.product-mockup.beanie:before{content:"";position:absolute;left:0;right:0;bottom:25px;height:52px;border-top:3px solid #435746;border-bottom:3px solid #435746;background:#0b0b0b}
+.product-mockup.socks{width:120px;height:300px;border-radius:22px 22px 50px 28px;margin-top:20px;transform:rotate(8deg)}.product-mockup.socks:before{content:"";position:absolute;right:-50px;bottom:0;width:105px;height:70px;background:#050505;border:3px solid #435746;border-left:0;border-radius:0 60px 40px 0}
+.product-mockup.underwear{width:280px;height:190px;clip-path:polygon(5% 0,95% 0,80% 100%,58% 100%,50% 58%,42% 100%,20% 100%);margin-top:85px}
+.product-mockup.badge,.product-mockup.button{width:230px;height:230px;border-radius:50%;margin-top:55px}
+.product-mockup.sticker{width:250px;height:250px;border-radius:32px;margin-top:45px;background:#f4f4f4;border-color:#d1d1d1}
+.product-mockup.poster{width:240px;height:330px;border-radius:4px;background:#f5f2e8;border-color:#cfc8b5}
+.product-mockup.other{width:260px;height:260px;border-radius:24px;margin-top:40px}
+.print-zone{position:absolute;left:15%;top:16%;width:70%;height:68%;border:2px dashed rgba(56,214,107,.65);z-index:2;pointer-events:none}.print-zone:before{content:"ZONE D’IMPRESSION";position:absolute;top:4px;left:5px;font-size:9px;color:#9be9af;letter-spacing:.08em}
+.logo{position:absolute;left:25%;top:25%;width:50%;height:28%;border:1px solid var(--orange);border-radius:8px;color:var(--orange);display:flex;align-items:center;justify-content:center;text-align:center;font-weight:bold;cursor:grab;z-index:5;touch-action:none;background:rgba(0,0,0,.18);overflow:hidden}.logo img{max-width:100%;max-height:100%;object-fit:contain;pointer-events:none}
+.mockup-controls{margin-top:14px;padding:14px;border:1px solid #2d4632;border-radius:14px;background:#08100a}.control-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}.coord{font-family:monospace;color:#c8ffd7;font-size:.82rem}.preset-row{display:flex;flex-wrap:wrap;gap:6px}.preset-row button{font-size:.76rem;padding:8px 10px}.dimension-line{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
 .steps{display:flex;gap:7px;flex-wrap:wrap}.step{padding:8px 10px;border-radius:999px;background:#1a291e;border:1px solid #38503d;font-size:12px}.on{outline:2px solid white}.s0{background:#27332a}.s1{background:#15345c}.s2{background:#3a1b5a}.s3{background:#5a4b12;color:#ffe}.s4{background:#5a2608}.s5{background:#5a1515}.s6,.s7,.s8{background:#124024}
 .order{border:1px solid #334a39;border-radius:14px;padding:14px;margin:10px 0;background:#0a120c}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:rgba(56,214,107,.12);border:1px solid rgba(56,214,107,.35);font-size:.75rem;color:#c8ffd7;margin-right:6px}.note{font-size:.88rem;color:var(--muted);line-height:1.45}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}.hero-art{min-height:190px;border-radius:18px;background:radial-gradient(circle at 35% 45%,rgba(255,122,0,.35),transparent 24%),radial-gradient(circle at 65% 42%,rgba(56,214,107,.28),transparent 30%),linear-gradient(135deg,#071108,#132218);display:flex;align-items:center;justify-content:center;font-size:clamp(3rem,10vw,7rem);letter-spacing:.08em}
 .footer{color:#8fa393;text-align:center;padding:18px;font-size:.82rem}
@@ -36,7 +51,7 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
 .dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:middle}.dot.green{background:#32d26f}.dot.yellow{background:#ffd54f}.dot.orange{background:#ff8a3d}.dot.red{background:#ef5350}.dot.gray{background:#7e8a80}
 .score{font-weight:900;color:#dfffe6}.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.statbox{background:#08100a;border:1px solid #2d4632;border-radius:12px;padding:12px}.statbox b{font-size:1.25rem;color:var(--orange)}
 @media(max-width:700px){.mini-grid{grid-template-columns:1fr}}
-@media(max-width:800px){.grid,.hero{grid-template-columns:1fr}.shirt{transform:scale(.84);transform-origin:center top;margin-bottom:-45px}.card{padding:14px}.hero-art{min-height:130px}}
+@media(max-width:800px){.grid,.hero{grid-template-columns:1fr}.product-mockup{transform:scale(.84);transform-origin:center center}.mockup-wrap{min-height:340px}.control-row,.dimension-line{grid-template-columns:1fr}.card{padding:14px}.hero-art{min-height:130px}}
 </style>
 </head>
 <body>
@@ -85,18 +100,49 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
     <label>Ville du client</label><input id="clientCity" placeholder="Ex. Terrebonne">
     <label>Région du client</label><input id="clientRegion" placeholder="Ex. Lanaudière">
     <label>Produit</label>
-    <select id="product">
+    <select id="product" onchange="updateProductTemplate()">
       <option>T-shirt</option><option>Hoodie</option><option>Chandail femme</option><option>Casquette</option>
       <option>Tuque</option><option>Bas</option><option>Sous-vêtement</option><option>Badge</option>
       <option>Macaron</option><option>Autocollant</option><option>Affiche</option><option>Autre</option>
     </select>
     <label>Quantité du lot</label><input id="qty" type="number" min="1" value="50" oninput="calc()">
     <label>Logo / image</label><input id="upload" type="file" accept="image/*">
-    <label>Taille du logo</label><input id="size" type="range" min="45" max="180" value="110">
     <label>Notes / besoins</label><textarea id="notes" placeholder="Couleurs, tailles, échéance, détails de production…">Créer une merch évolutive sans brûler tout le budget dès le départ.</textarea>
   </div><div>
-    <div class="stage"><div class="shirt" id="shirt"><div class="zone"></div><div class="logo" id="logo">RAP<br>JUNGLE</div></div></div>
-    <p class="note">Déplace le visuel avec ton doigt ou ta souris. L'aperçu sert de maquette rapide.</p>
+    <div class="stage">
+      <div class="mockup-wrap">
+        <div class="product-mockup tshirt" id="productMockup">
+          <div class="sleeve-r"></div><div class="pocket"></div>
+          <div class="print-zone" id="printZone"></div>
+          <div class="logo" id="logo">RAP<br>JUNGLE</div>
+        </div>
+      </div>
+      <div class="mockup-controls">
+        <div class="control-row">
+          <div><label>Face du produit</label><select id="mockupSide" onchange="syncMockupMeta()"><option value="Avant">Avant</option><option value="Arrière">Arrière</option></select></div>
+          <div><label>Emplacement</label><select id="placementPreset" onchange="applyPlacementPreset(this.value)">
+            <option value="custom">Personnalisé</option><option value="center-chest">Centre poitrine</option><option value="left-chest">Poitrine gauche</option><option value="full-front">Grand devant</option><option value="upper-back">Haut du dos</option><option value="full-back">Grand dos</option><option value="center">Centré</option>
+          </select></div>
+        </div>
+        <div class="preset-row">
+          <button class="sec" type="button" onclick="applyPlacementPreset('left-chest')">Poitrine gauche</button>
+          <button class="sec" type="button" onclick="applyPlacementPreset('center-chest')">Centre</button>
+          <button class="sec" type="button" onclick="applyPlacementPreset('full-front')">Grand devant</button>
+          <button class="sec" type="button" onclick="applyPlacementPreset('upper-back')">Haut dos</button>
+        </div>
+        <div class="dimension-line">
+          <div><label>X (%)</label><input id="logoX" type="number" min="0" max="100" step="0.5" value="25" oninput="applyPrecisionControls()"></div>
+          <div><label>Y (%)</label><input id="logoY" type="number" min="0" max="100" step="0.5" value="25" oninput="applyPrecisionControls()"></div>
+          <div><label>Largeur (%)</label><input id="logoW" type="number" min="5" max="95" step="0.5" value="50" oninput="applyPrecisionControls()"></div>
+        </div>
+        <div class="control-row">
+          <div><label>Largeur d’impression réelle (cm)</label><input id="printWidthCm" type="number" min="1" max="80" step="0.5" value="25" oninput="syncMockupMeta()"></div>
+          <div><label>Hauteur relative (%)</label><input id="logoH" type="number" min="5" max="90" step="0.5" value="28" oninput="applyPrecisionControls()"></div>
+        </div>
+        <div class="coord" id="mockupCoords">Avant • X 25% • Y 25% • L 50% • H 28% • impression 25 cm</div>
+      </div>
+    </div>
+    <p class="note">Le cadre pointillé indique la zone d’impression recommandée. Tu peux déplacer le visuel à la main ou entrer des coordonnées précises.</p>
   </div></div>
   <div id="rule" class="box"></div>
   <button class="ok" onclick="createOrder()">Créer + préparer le courriel</button>
@@ -231,7 +277,7 @@ function createOrder(){
   if(!$("clientName").value.trim()){alert("Entre le nom du client ou du projet.");return}
   if(q<1){alert("La quantité doit être d'au moins 1.");return}
   const p=Math.ceil(q/2),b=q-p,id="RJ-"+Date.now().toString().slice(-6);
-  const o={id,status:0,client:$("clientName").value.trim(),contact:$("contact").value.trim(),email:$("email").value.trim(),phone:$("phone").value.trim(),city:$("clientCity").value.trim(),region:$("clientRegion").value.trim(),product:$("product").value,qty:q,printed:p,backup:b,assignedPrinter:null,notes:$("notes").value,history:["Commande créée par le client."]};
+  const o={id,status:0,client:$("clientName").value.trim(),contact:$("contact").value.trim(),email:$("email").value.trim(),phone:$("phone").value.trim(),city:$("clientCity").value.trim(),region:$("clientRegion").value.trim(),product:$("product").value,qty:q,printed:p,backup:b,assignedPrinter:null,mockup:getMockupData(),notes:$("notes").value,history:["Commande créée par le client."]};
   orders.push(o);save();selected=id;
   alert("Commande Rap Jungle créée : "+id+"\nLe courriel va être préparé pour "+DEST_EMAIL+".");
   emailOrder(o);
@@ -250,7 +296,7 @@ function render(){
 }
 function openOrder(id){selected=id;renderSelected()}
 function get(){return orders.find(o=>o.id==selected)}
-function text(o){return "DOSSIER "+o.id+"\n\nSTATUT : "+steps[o.status]+"\nCLIENT : "+o.client+"\nRESPONSABLE : "+(o.contact||"—")+"\nCOURRIEL CLIENT : "+(o.email||"—")+"\nTÉLÉPHONE : "+(o.phone||"—")+"\nVILLE : "+(o.city||"—")+"\nRÉGION : "+(o.region||"—")+"\nPRINTER ASSIGNÉ : "+(printerName(o.assignedPrinter)||"—")+"\nPRODUIT : "+o.product+"\n\nRÈGLE 50/50\nLot total : "+o.qty+"\nImprimé maintenant : "+o.printed+"\nRéserve vierge : "+o.backup+"\n\nNOTES\n"+o.notes+"\n\nHISTORIQUE\n"+o.history.join("\n")}
+function text(o){return "DOSSIER "+o.id+"\n\nSTATUT : "+steps[o.status]+"\nCLIENT : "+o.client+"\nRESPONSABLE : "+(o.contact||"—")+"\nCOURRIEL CLIENT : "+(o.email||"—")+"\nTÉLÉPHONE : "+(o.phone||"—")+"\nVILLE : "+(o.city||"—")+"\nRÉGION : "+(o.region||"—")+"\nPRINTER ASSIGNÉ : "+(printerName(o.assignedPrinter)||"—")+"\nPRODUIT : "+o.product+"\n\nPLACEMENT VISUEL\n"+mockupText(o.mockup)+"\n\nRÈGLE 50/50\nLot total : "+o.qty+"\nImprimé maintenant : "+o.printed+"\nRéserve vierge : "+o.backup+"\n\nNOTES\n"+o.notes+"\n\nHISTORIQUE\n"+o.history.join("\n")}
 
 function renderSelected(){
   let o=get();
@@ -387,16 +433,84 @@ function removePrinter(id){
   orders.forEach(o=>{if(o.assignedPrinter===id)o.assignedPrinter=null});save();renderPrinters();render();
 }
 
+const PRODUCT_TEMPLATES={
+  "T-shirt":{cls:"tshirt",zone:[15,16,70,68],preset:"center-chest",cm:25},
+  "Hoodie":{cls:"hoodie",zone:[15,18,70,55],preset:"center-chest",cm:25},
+  "Chandail femme":{cls:"women",zone:[18,18,64,62],preset:"center-chest",cm:22},
+  "Casquette":{cls:"cap",zone:[20,25,60,45],preset:"center",cm:12},
+  "Tuque":{cls:"beanie",zone:[18,40,64,30],preset:"center",cm:12},
+  "Bas":{cls:"socks",zone:[18,15,64,58],preset:"center",cm:8},
+  "Sous-vêtement":{cls:"underwear",zone:[20,15,60,45],preset:"center",cm:12},
+  "Badge":{cls:"badge",zone:[12,12,76,76],preset:"center",cm:6},
+  "Macaron":{cls:"button",zone:[12,12,76,76],preset:"center",cm:6},
+  "Autocollant":{cls:"sticker",zone:[8,8,84,84],preset:"center",cm:10},
+  "Affiche":{cls:"poster",zone:[7,7,86,86],preset:"center",cm:40},
+  "Autre":{cls:"other",zone:[10,10,80,80],preset:"center",cm:20}
+};
+const PLACEMENTS={
+  "center-chest":[25,24,50,28],
+  "left-chest":[18,22,28,20],
+  "full-front":[15,18,70,55],
+  "upper-back":[25,14,50,26],
+  "full-back":[15,19,70,56],
+  "center":[25,25,50,50]
+};
+function updateProductTemplate(){
+  const p=$("product").value,t=PRODUCT_TEMPLATES[p]||PRODUCT_TEMPLATES["Autre"];
+  const m=$("productMockup");m.className="product-mockup "+t.cls;
+  const z=$("printZone");z.style.left=t.zone[0]+"%";z.style.top=t.zone[1]+"%";z.style.width=t.zone[2]+"%";z.style.height=t.zone[3]+"%";
+  $("printWidthCm").value=t.cm;
+  applyPlacementPreset(t.preset);
+}
+function applyPlacementPreset(name){
+  const p=PLACEMENTS[name]||PLACEMENTS.center;
+  $("placementPreset").value=PLACEMENTS[name]?name:"custom";
+  $("logoX").value=p[0];$("logoY").value=p[1];$("logoW").value=p[2];$("logoH").value=p[3];
+  if(name==="upper-back"||name==="full-back")$("mockupSide").value="Arrière";
+  if(name==="left-chest"||name==="center-chest"||name==="full-front")$("mockupSide").value="Avant";
+  applyPrecisionControls();
+}
+function applyPrecisionControls(){
+  const x=Math.max(0,Math.min(95,Number($("logoX").value)||0));
+  const y=Math.max(0,Math.min(95,Number($("logoY").value)||0));
+  const w=Math.max(5,Math.min(95,Number($("logoW").value)||5));
+  const h=Math.max(5,Math.min(90,Number($("logoH").value)||5));
+  const l=$("logo");l.style.left=x+"%";l.style.top=y+"%";l.style.width=w+"%";l.style.height=h+"%";
+  $("placementPreset").value="custom";
+  syncMockupMeta();
+}
+function syncMockupMeta(){
+  $("mockupCoords").textContent=$("mockupSide").value+" • X "+$("logoX").value+"% • Y "+$("logoY").value+"% • L "+$("logoW").value+"% • H "+$("logoH").value+"% • impression "+$("printWidthCm").value+" cm";
+}
+function getMockupData(){
+  return {side:$("mockupSide").value,preset:$("placementPreset").value,x:Number($("logoX").value),y:Number($("logoY").value),w:Number($("logoW").value),h:Number($("logoH").value),printWidthCm:Number($("printWidthCm").value)};
+}
+function mockupText(m){
+  if(!m)return "Aucune donnée de placement enregistrée.";
+  return "Face : "+(m.side||"—")+"\nPreset : "+(m.preset||"personnalisé")+"\nPosition X : "+m.x+"%\nPosition Y : "+m.y+"%\nLargeur visuelle : "+m.w+"%\nHauteur visuelle : "+m.h+"%\nLargeur d’impression réelle : "+m.printWidthCm+" cm";
+}
+function syncLogoFromDrag(){
+  const m=$("productMockup").getBoundingClientRect(),l=$("logo").getBoundingClientRect();
+  const x=((l.left-m.left)/m.width)*100,y=((l.top-m.top)/m.height)*100,w=(l.width/m.width)*100,h=(l.height/m.height)*100;
+  $("logoX").value=x.toFixed(1);$("logoY").value=y.toFixed(1);$("logoW").value=w.toFixed(1);$("logoH").value=h.toFixed(1);$("placementPreset").value="custom";syncMockupMeta();
+}
 $("upload").addEventListener("change",e=>{
   let f=e.target.files[0];if(!f)return;
   let r=new FileReader();r.onload=ev=>{$("logo").innerHTML="<img alt='Logo client' src='"+ev.target.result+"'>"};r.readAsDataURL(f)
 });
-$("size").addEventListener("input",e=>{$("logo").style.width=e.target.value+"px";$("logo").style.height=Math.round(e.target.value*.8)+"px"});
 let drag=false,ox=0,oy=0;
 $("logo").addEventListener("pointerdown",e=>{drag=true;$("logo").setPointerCapture(e.pointerId);let r=$("logo").getBoundingClientRect();ox=e.clientX-r.left;oy=e.clientY-r.top});
-$("logo").addEventListener("pointermove",e=>{if(!drag)return;let s=$("shirt").getBoundingClientRect(),l=$("logo");let x=e.clientX-s.left-ox,y=e.clientY-s.top-oy;x=Math.max(0,Math.min(x,$("shirt").clientWidth-l.offsetWidth));y=Math.max(0,Math.min(y,$("shirt").clientHeight-l.offsetHeight));l.style.left=x+"px";l.style.top=y+"px"});
-$("logo").addEventListener("pointerup",()=>drag=false);
+$("logo").addEventListener("pointermove",e=>{
+  if(!drag)return;
+  const m=$("productMockup").getBoundingClientRect(),l=$("logo");
+  let x=e.clientX-m.left-ox,y=e.clientY-m.top-oy;
+  x=Math.max(0,Math.min(x,$("productMockup").clientWidth-l.offsetWidth));
+  y=Math.max(0,Math.min(y,$("productMockup").clientHeight-l.offsetHeight));
+  l.style.left=x+"px";l.style.top=y+"px";syncLogoFromDrag();
+});
+$("logo").addEventListener("pointerup",()=>{drag=false;syncLogoFromDrag()});
 $("logo").addEventListener("pointercancel",()=>drag=false);
+updateProductTemplate();
 
 savePrinters();calc();renderPrinters();render();
 </script>
