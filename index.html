@@ -31,6 +31,11 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
 .steps{display:flex;gap:7px;flex-wrap:wrap}.step{padding:8px 10px;border-radius:999px;background:#1a291e;border:1px solid #38503d;font-size:12px}.on{outline:2px solid white}.s0{background:#27332a}.s1{background:#15345c}.s2{background:#3a1b5a}.s3{background:#5a4b12;color:#ffe}.s4{background:#5a2608}.s5{background:#5a1515}.s6,.s7,.s8{background:#124024}
 .order{border:1px solid #334a39;border-radius:14px;padding:14px;margin:10px 0;background:#0a120c}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:rgba(56,214,107,.12);border:1px solid rgba(56,214,107,.35);font-size:.75rem;color:#c8ffd7;margin-right:6px}.note{font-size:.88rem;color:var(--muted);line-height:1.45}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}.hero-art{min-height:190px;border-radius:18px;background:radial-gradient(circle at 35% 45%,rgba(255,122,0,.35),transparent 24%),radial-gradient(circle at 65% 42%,rgba(56,214,107,.28),transparent 30%),linear-gradient(135deg,#071108,#132218);display:flex;align-items:center;justify-content:center;font-size:clamp(3rem,10vw,7rem);letter-spacing:.08em}
 .footer{color:#8fa393;text-align:center;padding:18px;font-size:.82rem}
+.admin-nav{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}.admin-panel{display:none}.admin-panel.active{display:block}
+.printer-card{border:1px solid #334a39;border-radius:14px;padding:14px;background:#0a120c;margin:10px 0}.printer-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.printer-meta{font-size:.86rem;color:var(--muted);line-height:1.45}.printer-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:6px;vertical-align:middle}.dot.green{background:#32d26f}.dot.yellow{background:#ffd54f}.dot.orange{background:#ff8a3d}.dot.red{background:#ef5350}.dot.gray{background:#7e8a80}
+.score{font-weight:900;color:#dfffe6}.mini-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.statbox{background:#08100a;border:1px solid #2d4632;border-radius:12px;padding:12px}.statbox b{font-size:1.25rem;color:var(--orange)}
+@media(max-width:700px){.mini-grid{grid-template-columns:1fr}}
 @media(max-width:800px){.grid,.hero{grid-template-columns:1fr}.shirt{transform:scale(.84);transform-origin:center top;margin-bottom:-45px}.card{padding:14px}.hero-art{min-height:130px}}
 </style>
 </head>
@@ -77,6 +82,8 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
     <label>Responsable</label><input id="contact" placeholder="Nom de la personne responsable">
     <label>Courriel du client</label><input id="email" type="email" placeholder="client@email.com">
     <label>Téléphone (optionnel)</label><input id="phone" type="tel" placeholder="514 000-0000">
+    <label>Ville du client</label><input id="clientCity" placeholder="Ex. Terrebonne">
+    <label>Région du client</label><input id="clientRegion" placeholder="Ex. Lanaudière">
     <label>Produit</label>
     <select id="product">
       <option>T-shirt</option><option>Hoodie</option><option>Chandail femme</option><option>Casquette</option>
@@ -98,16 +105,47 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
 
 <section id="admin" class="card hidden">
   <h2 id="adminTitle">Tableau</h2>
-  <div class="grid"><div>
-    <h3>Commandes</h3><div id="list"></div>
-  </div><div>
-    <h3>Dossier sélectionné</h3><div id="selected" class="box">Aucun dossier.</div>
-    <div id="actions"></div>
-    <h3>Progression</h3><div id="progress" class="steps"></div>
-  </div></div>
-  <button class="sec" onclick="render()">Rafraîchir</button>
-  <button class="bad" onclick="logout()">Déconnexion</button>
-  <button class="bad" onclick="clearAll()">Effacer tout</button>
+  <div class="admin-nav">
+    <button class="sec" onclick="show('home')">← Retour accueil</button>
+    <button class="pri" onclick="openAdminPanel('ordersPanel')">Commandes</button>
+    <button class="sec" onclick="openAdminPanel('printersPanel')">Printers</button>
+    <button class="sec" onclick="render()">Rafraîchir</button>
+    <button class="bad" onclick="logout()">Déconnexion</button>
+  </div>
+
+  <div id="ordersPanel" class="admin-panel active">
+    <div class="grid"><div>
+      <h3>Commandes</h3><div id="list"></div>
+    </div><div>
+      <h3>Dossier sélectionné</h3><div id="selected" class="box">Aucun dossier.</div>
+      <div id="actions"></div>
+      <h3>Progression</h3><div id="progress" class="steps"></div>
+      <h3>Printer recommandé</h3><div id="printerReco" class="box">Sélectionne une commande.</div>
+    </div></div>
+  </div>
+
+  <div id="printersPanel" class="admin-panel">
+    <div class="grid"><div>
+      <h3>Ajouter / modifier un printer</h3>
+      <input id="printerId" type="hidden">
+      <label>Nom</label><input id="printerName" placeholder="Nom du printer">
+      <label>Ville</label><input id="printerCity" placeholder="Ex. Montréal">
+      <label>Région</label><input id="printerRegion" placeholder="Ex. Montréal, Lanaudière, Saguenay">
+      <label>Régions desservies</label><input id="printerZones" placeholder="Montréal, Laval, Lanaudière">
+      <label>Spécialités</label><input id="printerSpecialties" placeholder="Sérigraphie 3 couleurs, DTG, hoodies...">
+      <label>Coût moyen / print</label><input id="printerCost" type="number" step="0.01" value="7">
+      <label>Capacité</label>
+      <select id="printerCapacity"><option value="available">Disponible</option><option value="medium">Charge moyenne</option><option value="full">Pleine capacité</option><option value="paused">Pause</option></select>
+      <label>Qualité interne /10</label><input id="printerQuality" type="number" min="1" max="10" value="8">
+      <label>Actif</label><select id="printerActive"><option value="true">Oui</option><option value="false">Non</option></select>
+      <button class="ok" onclick="savePrinter()">Enregistrer printer</button>
+      <button class="sec" onclick="resetPrinterForm()">Réinitialiser</button>
+    </div><div>
+      <h3>Bibliothèque de printers</h3>
+      <div id="printerStats" class="mini-grid"></div>
+      <div id="printerList"></div>
+    </div></div>
+  </div>
 </section>
 
 <div class="footer">Rap Jungle — outil autonome • Courriels dirigés vers MEYDEN</div>
@@ -116,10 +154,16 @@ button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800
 <script>
 const DEST_EMAIL="meydenprudhomme95@gmail.com";
 let role="",loginRole="",selected=null,orders=JSON.parse(localStorage.getItem("rapjungle_merch_orders")||"[]");
+let printers=JSON.parse(localStorage.getItem("rapjungle_printers")||"null")||[
+{id:"PR-001",name:"Printer Montréal",city:"Montréal",region:"Montréal",zones:["Montréal","Laval","Montérégie"],specialties:["Sérigraphie 3 couleurs","T-shirt","Hoodie"],cost:7,capacity:"available",quality:9,active:true},
+{id:"PR-002",name:"Printer Lanaudière",city:"Terrebonne",region:"Lanaudière",zones:["Lanaudière","Laval","Laurentides","Montréal"],specialties:["Sérigraphie 3 couleurs","Petit tirage"],cost:6.5,capacity:"medium",quality:8,active:true},
+{id:"PR-003",name:"Printer Saguenay",city:"Saguenay",region:"Saguenay–Lac-Saint-Jean",zones:["Saguenay–Lac-Saint-Jean","Côte-Nord"],specialties:["Sérigraphie","Merch groupes"],cost:7.5,capacity:"available",quality:8,active:true}
+];
 const steps=["⚪ Nouveau dossier","🔵 Analyse Rap Jungle","🟣 Soumission envoyée","🟡 Dépôt reçu","🟠 Transmis en production","🔴 Production","🟢 Retour Rap Jungle","🟢 Distribution","🟢 Complété"];
 const $=id=>document.getElementById(id);
 
 function save(){localStorage.setItem("rapjungle_merch_orders",JSON.stringify(orders))}
+function savePrinters(){localStorage.setItem("rapjungle_printers",JSON.stringify(printers))}
 function show(id){["home","login","client","admin"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");calc();render()}
 function login(r){
   loginRole=r;
@@ -182,7 +226,7 @@ function createOrder(){
   if(!$("clientName").value.trim()){alert("Entre le nom du client ou du projet.");return}
   if(q<1){alert("La quantité doit être d'au moins 1.");return}
   const p=Math.ceil(q/2),b=q-p,id="RJ-"+Date.now().toString().slice(-6);
-  const o={id,status:0,client:$("clientName").value.trim(),contact:$("contact").value.trim(),email:$("email").value.trim(),phone:$("phone").value.trim(),product:$("product").value,qty:q,printed:p,backup:b,notes:$("notes").value,history:["Commande créée par le client."]};
+  const o={id,status:0,client:$("clientName").value.trim(),contact:$("contact").value.trim(),email:$("email").value.trim(),phone:$("phone").value.trim(),city:$("clientCity").value.trim(),region:$("clientRegion").value.trim(),product:$("product").value,qty:q,printed:p,backup:b,assignedPrinter:null,notes:$("notes").value,history:["Commande créée par le client."]};
   orders.push(o);save();selected=id;
   alert("Commande Rap Jungle créée : "+id+"\nLe courriel va être préparé pour "+DEST_EMAIL+".");
   emailOrder(o);
@@ -197,16 +241,16 @@ function render(){
     d.innerHTML="<b>"+esc(o.id)+"</b><br>"+esc(o.client)+" — "+esc(o.product)+"<br>"+esc(steps[o.status])+"<br>Lot "+o.qty+" : "+o.printed+" imprimés / "+o.backup+" réserve<br><button class='pri' onclick=\"openOrder('"+o.id+"')\">Ouvrir</button>";
     $("list").appendChild(d);
   });
-  renderSelected();
+  renderSelected();renderPrinters();
 }
 function openOrder(id){selected=id;renderSelected()}
 function get(){return orders.find(o=>o.id==selected)}
-function text(o){return "DOSSIER "+o.id+"\n\nSTATUT : "+steps[o.status]+"\nCLIENT : "+o.client+"\nRESPONSABLE : "+(o.contact||"—")+"\nCOURRIEL CLIENT : "+(o.email||"—")+"\nTÉLÉPHONE : "+(o.phone||"—")+"\nPRODUIT : "+o.product+"\n\nRÈGLE 50/50\nLot total : "+o.qty+"\nImprimé maintenant : "+o.printed+"\nRéserve vierge : "+o.backup+"\n\nNOTES\n"+o.notes+"\n\nHISTORIQUE\n"+o.history.join("\n")}
+function text(o){return "DOSSIER "+o.id+"\n\nSTATUT : "+steps[o.status]+"\nCLIENT : "+o.client+"\nRESPONSABLE : "+(o.contact||"—")+"\nCOURRIEL CLIENT : "+(o.email||"—")+"\nTÉLÉPHONE : "+(o.phone||"—")+"\nVILLE : "+(o.city||"—")+"\nRÉGION : "+(o.region||"—")+"\nPRINTER ASSIGNÉ : "+(printerName(o.assignedPrinter)||"—")+"\nPRODUIT : "+o.product+"\n\nRÈGLE 50/50\nLot total : "+o.qty+"\nImprimé maintenant : "+o.printed+"\nRéserve vierge : "+o.backup+"\n\nNOTES\n"+o.notes+"\n\nHISTORIQUE\n"+o.history.join("\n")}
 
 function renderSelected(){
   let o=get();
-  if(!o){$("selected").innerText="Aucun dossier.";$("actions").innerHTML="";$("progress").innerHTML="";return}
-  $("selected").innerText=text(o);$("progress").innerHTML="";
+  if(!o){$("selected").innerText="Aucun dossier.";$("actions").innerHTML="";$("progress").innerHTML="";if($("printerReco"))$("printerReco").innerHTML="Sélectionne une commande.";return}
+  $("selected").innerText=text(o);$("progress").innerHTML="";renderPrinterReco(o);
   steps.forEach((s,i)=>{let sp=document.createElement("span");sp.className="step s"+i+(i==o.status?" on":"");sp.innerText=s;$("progress").appendChild(sp)});
   let a="";
   if(role=="rapjungle"){
@@ -237,6 +281,107 @@ function emailOrder(o){
 
 function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
 
+
+function openAdminPanel(id){
+  document.querySelectorAll(".admin-panel").forEach(x=>x.classList.remove("active"));
+  $(id).classList.add("active");
+  if(id==="printersPanel")renderPrinters();
+}
+function capLabel(v){return {available:"Disponible",medium:"Charge moyenne",full:"Pleine capacité",paused:"Pause"}[v]||v}
+function capScore(v){return {available:100,medium:70,full:30,paused:0}[v]??0}
+function printerName(id){return printers.find(p=>p.id===id)?.name||""}
+function normalize(s){return String(s||"").trim().toLowerCase()}
+function regionAffinity(o,p){
+  const r=normalize(o.region),c=normalize(o.city),pr=normalize(p.region),pc=normalize(p.city),zones=(p.zones||[]).map(normalize);
+  if(!p.active)return 0;
+  if(r && (r===pr || zones.includes(r)))return 100;
+  if(c && c===pc)return 100;
+  if(r && (pr.includes(r)||r.includes(pr)))return 85;
+  return 45;
+}
+function specialtyScore(o,p){
+  const txt=normalize((p.specialties||[]).join(" "));
+  const prod=normalize(o.product);
+  if(txt.includes(prod))return 100;
+  if(prod.includes("t-shirt")&&txt.includes("t-shirt"))return 100;
+  if(txt.includes("sérigraphie"))return 85;
+  return 60;
+}
+function costScore(p){
+  const cost=Number(p.cost)||99;
+  return Math.max(0,100-(cost-6)*12);
+}
+function printerScore(o,p){
+  const proximity=regionAffinity(o,p);
+  const capacity=capScore(p.capacity);
+  const cost=costScore(p);
+  const specialty=specialtyScore(o,p);
+  const quality=Math.max(0,Math.min(100,(Number(p.quality)||0)*10));
+  return Math.round(proximity*.4+capacity*.25+cost*.15+specialty*.1+quality*.1);
+}
+function scoreColor(score,p){
+  if(!p.active||p.capacity==="paused")return "gray";
+  if(score>=85)return "green";
+  if(score>=70)return "yellow";
+  if(score>=55)return "orange";
+  return "red";
+}
+function getRecommendations(o){
+  return printers.filter(p=>p.active).map(p=>({...p,score:printerScore(o,p)})).sort((a,b)=>b.score-a.score);
+}
+function renderPrinterReco(o){
+  const el=$("printerReco");if(!el)return;
+  const recs=getRecommendations(o);
+  if(!recs.length){el.innerHTML="Aucun printer actif.";return}
+  el.innerHTML=recs.slice(0,3).map((p,i)=>`
+    <div class="printer-card">
+      <div class="printer-head"><div><b>${i===0?"RECOMMANDÉ — ":""}${esc(p.name)}</b><div class="printer-meta">${esc(p.city)} • ${esc(p.region)}<br>${esc(capLabel(p.capacity))} • coût moyen ${Number(p.cost).toFixed(2)} $ / print</div></div><div class="score"><span class="dot ${scoreColor(p.score,p)}"></span>${p.score}/100</div></div>
+      <div class="printer-actions"><button class="ok" onclick="assignPrinter('${p.id}')">Assigner</button></div>
+    </div>`).join("");
+}
+function assignPrinter(id){
+  const o=get();if(!o)return;
+  o.assignedPrinter=id;
+  o.history.push("Printer assigné : "+printerName(id));
+  save();renderSelected();render();
+}
+function renderPrinters(){
+  if(!$("printerList"))return;
+  const active=printers.filter(p=>p.active).length;
+  const available=printers.filter(p=>p.active&&p.capacity==="available").length;
+  $("printerStats").innerHTML=`<div class="statbox"><b>${printers.length}</b><div class="note">Printers total</div></div><div class="statbox"><b>${active}</b><div class="note">Actifs</div></div><div class="statbox"><b>${available}</b><div class="note">Disponibles</div></div><div class="statbox"><b>${printers.filter(p=>p.capacity==="full").length}</b><div class="note">Pleine capacité</div></div>`;
+  $("printerList").innerHTML=printers.map(p=>`
+    <div class="printer-card">
+      <div class="printer-head">
+        <div><b>${esc(p.name)}</b><div class="printer-meta">${esc(p.city)} • ${esc(p.region)}<br>Zones : ${esc((p.zones||[]).join(", ")||"—")}<br>Spécialités : ${esc((p.specialties||[]).join(", ")||"—")}<br>Coût moyen : ${Number(p.cost||0).toFixed(2)} $ • Qualité : ${p.quality}/10</div></div>
+        <div><span class="dot ${p.active?(p.capacity==="available"?"green":p.capacity==="medium"?"yellow":p.capacity==="full"?"orange":"gray"):"gray"}"></span>${esc(capLabel(p.capacity))}</div>
+      </div>
+      <div class="printer-actions">
+        <button class="sec" onclick="editPrinter('${p.id}')">Modifier</button>
+        <button class="bad" onclick="removePrinter('${p.id}')">Retirer</button>
+      </div>
+    </div>`).join("");
+}
+function savePrinter(){
+  const id=$("printerId").value||("PR-"+Date.now().toString().slice(-6));
+  const p={id,name:$("printerName").value.trim(),city:$("printerCity").value.trim(),region:$("printerRegion").value.trim(),zones:$("printerZones").value.split(",").map(x=>x.trim()).filter(Boolean),specialties:$("printerSpecialties").value.split(",").map(x=>x.trim()).filter(Boolean),cost:Number($("printerCost").value)||0,capacity:$("printerCapacity").value,quality:Number($("printerQuality").value)||0,active:$("printerActive").value==="true"};
+  if(!p.name){alert("Entre le nom du printer.");return}
+  const i=printers.findIndex(x=>x.id===id);if(i>=0)printers[i]=p;else printers.push(p);
+  savePrinters();resetPrinterForm();renderPrinters();renderSelected();
+}
+function editPrinter(id){
+  const p=printers.find(x=>x.id===id);if(!p)return;
+  $("printerId").value=p.id;$("printerName").value=p.name;$("printerCity").value=p.city;$("printerRegion").value=p.region;$("printerZones").value=(p.zones||[]).join(", ");$("printerSpecialties").value=(p.specialties||[]).join(", ");$("printerCost").value=p.cost;$("printerCapacity").value=p.capacity;$("printerQuality").value=p.quality;$("printerActive").value=String(p.active);
+  openAdminPanel("printersPanel");
+}
+function resetPrinterForm(){["printerId","printerName","printerCity","printerRegion","printerZones","printerSpecialties"].forEach(id=>$(id).value="");$("printerCost").value=7;$("printerCapacity").value="available";$("printerQuality").value=8;$("printerActive").value="true"}
+function removePrinter(id){
+  const p=printers.find(x=>x.id===id);if(!p)return;
+  if(!confirm("Retirer "+p.name+" de la bibliothèque?"))return;
+  printers=printers.filter(x=>x.id!==id);savePrinters();
+  orders.forEach(o=>{if(o.assignedPrinter===id)o.assignedPrinter=null});save();renderPrinters();render();
+}
+
 $("upload").addEventListener("change",e=>{
   let f=e.target.files[0];if(!f)return;
   let r=new FileReader();r.onload=ev=>{$("logo").innerHTML="<img alt='Logo client' src='"+ev.target.result+"'>"};r.readAsDataURL(f)
@@ -248,6 +393,6 @@ $("logo").addEventListener("pointermove",e=>{if(!drag)return;let s=$("shirt").ge
 $("logo").addEventListener("pointerup",()=>drag=false);
 $("logo").addEventListener("pointercancel",()=>drag=false);
 
-calc();render();
+savePrinters();calc();renderPrinters();render();
 </script>
 </body></html>
