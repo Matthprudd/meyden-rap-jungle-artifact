@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#071108">
+<title>Rap Jungle — Gestion Merch V1</title>
+<style>
+:root{--orange:#ff7a00;--green:#38d66b;--deep:#071108;--panel:#101812;--panel2:#18231a;--line:#2d4632;--text:#fff;--muted:#b5c2b8;--good:#36d676;--danger:#ef5350;--yellow:#ffd54f}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,Helvetica,sans-serif;background:
+radial-gradient(circle at 12% 0%,rgba(56,214,107,.20),transparent 30%),
+radial-gradient(circle at 90% 8%,rgba(255,122,0,.18),transparent 28%),
+linear-gradient(180deg,#061008,#09140b 48%,#020603 100%);color:var(--text);min-height:100vh}
+body:before,body:after{content:"";position:fixed;width:220px;height:220px;border:34px solid rgba(56,214,107,.08);border-radius:50% 0 50% 0;transform:rotate(28deg);pointer-events:none;z-index:-1}
+body:before{left:-110px;top:120px}body:after{right:-100px;bottom:80px;transform:rotate(208deg)}
+header{padding:18px 20px;background:rgba(2,7,3,.94);border-bottom:4px solid var(--orange);position:sticky;top:0;z-index:10;backdrop-filter:blur(10px)}
+.brand{display:flex;align-items:center;gap:12px;max-width:1200px;margin:auto}
+.mark{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(145deg,var(--green),var(--orange));font-size:25px;box-shadow:0 0 24px rgba(56,214,107,.23)}
+h1{margin:0;color:var(--orange);font-size:clamp(1.35rem,4vw,2rem);letter-spacing:.04em}.tagline{margin:2px 0 0;color:#d5e5d8;font-size:.9rem}
+main{max-width:1200px;margin:auto;padding:18px}
+.card{background:rgba(16,24,18,.94);border:1px solid var(--line);border-radius:20px;padding:18px;margin:14px 0;box-shadow:0 20px 50px rgba(0,0,0,.24)}
+h2,h3{color:var(--orange)}label{font-size:.86rem;color:#dce8de;font-weight:700}
+input,select,textarea{width:100%;padding:12px;margin:6px 0 12px;background:#071009;color:#fff;border:1px solid #38503d;border-radius:11px;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--green);box-shadow:0 0 0 2px rgba(56,214,107,.12)}
+button,.buttonlink{padding:11px 15px;border:0;border-radius:11px;font-weight:800;margin:5px;cursor:pointer;text-decoration:none;display:inline-block}
+.pri{background:var(--orange);color:#111}.sec{background:#203024;color:white;border:1px solid #39523f}.ok{background:var(--good);color:#04130a}.bad{background:var(--danger);color:white}.mail{background:var(--yellow);color:#181400}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}.hidden{display:none}.box{white-space:pre-line;background:#060b07;border:1px solid #2c4031;border-radius:12px;padding:14px;line-height:1.45}
+.stage{background:radial-gradient(circle at 50% 20%,rgba(255,255,255,.12),transparent 25%),#071009;border:1px solid #33483a;border-radius:18px;padding:28px;display:inline-block;max-width:100%;overflow:hidden}
+.shirt{width:260px;height:320px;background:#050505;border:3px solid #435746;border-radius:60px 60px 25px 25px;position:relative;margin:0 auto}.shirt:before,.shirt:after{content:"";position:absolute;top:55px;width:70px;height:120px;background:inherit;border:3px solid #435746}.shirt:before{left:-54px;transform:rotate(18deg);border-radius:25px}.shirt:after{right:-54px;transform:rotate(-18deg);border-radius:25px}.zone{position:absolute;left:45px;top:75px;width:170px;height:195px;border:2px dashed #708674}.logo{position:absolute;left:55px;top:80px;width:110px;height:90px;border:1px solid var(--orange);border-radius:8px;color:var(--orange);display:flex;align-items:center;justify-content:center;text-align:center;font-weight:bold;cursor:grab;z-index:5;touch-action:none;background:rgba(0,0,0,.15)}.logo img{max-width:100%;max-height:100%;pointer-events:none}
+.steps{display:flex;gap:7px;flex-wrap:wrap}.step{padding:8px 10px;border-radius:999px;background:#1a291e;border:1px solid #38503d;font-size:12px}.on{outline:2px solid white}.s0{background:#27332a}.s1{background:#15345c}.s2{background:#3a1b5a}.s3{background:#5a4b12;color:#ffe}.s4{background:#5a2608}.s5{background:#5a1515}.s6,.s7,.s8{background:#124024}
+.order{border:1px solid #334a39;border-radius:14px;padding:14px;margin:10px 0;background:#0a120c}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:rgba(56,214,107,.12);border:1px solid rgba(56,214,107,.35);font-size:.75rem;color:#c8ffd7;margin-right:6px}.note{font-size:.88rem;color:var(--muted);line-height:1.45}.hero{display:grid;grid-template-columns:1.2fr .8fr;gap:18px;align-items:center}.hero-art{min-height:190px;border-radius:18px;background:radial-gradient(circle at 35% 45%,rgba(255,122,0,.35),transparent 24%),radial-gradient(circle at 65% 42%,rgba(56,214,107,.28),transparent 30%),linear-gradient(135deg,#071108,#132218);display:flex;align-items:center;justify-content:center;font-size:clamp(3rem,10vw,7rem);letter-spacing:.08em}
+.footer{color:#8fa393;text-align:center;padding:18px;font-size:.82rem}
+@media(max-width:800px){.grid,.hero{grid-template-columns:1fr}.shirt{transform:scale(.84);transform-origin:center top;margin-bottom:-45px}.card{padding:14px}.hero-art{min-height:130px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="mark">🦁</div>
+    <div><h1>RAP JUNGLE — MERCH FLOW</h1><p class="tagline">Commande • production • suivi • distribution</p></div>
+  </div>
+</header>
+<main>
+
+<section id="home" class="card">
+  <div class="hero">
+    <div>
+      <span class="pill">Application autonome</span><span class="pill">Rap Jungle</span>
+      <h2>Infrastructure de gestion de merch</h2>
+      <p>Une commande entre par le client, devient un dossier Rap Jungle, passe en analyse, en production, revient dans le suivi Rap Jungle, puis part en distribution.</p>
+      <button class="pri" onclick="show('client')">Créer une commande</button>
+      <button class="sec" onclick="login('rapjungle')">Admin Rap Jungle</button>
+      <button class="sec" onclick="login('production')">Portail Production</button>
+      <a class="buttonlink mail" href="mailto:meydenprudhomme95@gmail.com?subject=Rap%20Jungle%20-%20Demande%20merch">Écrire à MEYDEN</a>
+      <p class="note">Codes démo : Rap Jungle <b>1984</b> / Production <b>2026</b>. Cette version demeure indépendante du Service 360.</p>
+    </div>
+    <div class="hero-art">🌿🦁🌿</div>
+  </div>
+</section>
+
+<section id="login" class="card hidden">
+  <h2 id="loginTitle">Connexion</h2>
+  <input id="pseudo" placeholder="Nom / pseudo">
+  <input id="code" maxlength="4" inputmode="numeric" placeholder="Code 4 chiffres">
+  <button class="pri" onclick="check()">Entrer</button>
+  <button class="sec" onclick="show('home')">Retour</button>
+</section>
+
+<section id="client" class="card hidden">
+  <h2>Créer une commande Rap Jungle</h2>
+  <div class="grid"><div>
+    <label>Client / artiste / groupe / entreprise</label><input id="clientName" placeholder="Nom du client ou du projet">
+    <label>Responsable</label><input id="contact" placeholder="Nom de la personne responsable">
+    <label>Courriel du client</label><input id="email" type="email" placeholder="client@email.com">
+    <label>Téléphone (optionnel)</label><input id="phone" type="tel" placeholder="514 000-0000">
+    <label>Produit</label>
+    <select id="product">
+      <option>T-shirt</option><option>Hoodie</option><option>Chandail femme</option><option>Casquette</option>
+      <option>Tuque</option><option>Bas</option><option>Sous-vêtement</option><option>Badge</option>
+      <option>Macaron</option><option>Autocollant</option><option>Affiche</option><option>Autre</option>
+    </select>
+    <label>Quantité du lot</label><input id="qty" type="number" min="1" value="50" oninput="calc()">
+    <label>Logo / image</label><input id="upload" type="file" accept="image/*">
+    <label>Taille du logo</label><input id="size" type="range" min="45" max="180" value="110">
+    <label>Notes / besoins</label><textarea id="notes" placeholder="Couleurs, tailles, échéance, détails de production…">Créer une merch évolutive sans brûler tout le budget dès le départ.</textarea>
+  </div><div>
+    <div class="stage"><div class="shirt" id="shirt"><div class="zone"></div><div class="logo" id="logo">RAP<br>JUNGLE</div></div></div>
+    <p class="note">Déplace le visuel avec ton doigt ou ta souris. L'aperçu sert de maquette rapide.</p>
+  </div></div>
+  <div id="rule" class="box"></div>
+  <button class="ok" onclick="createOrder()">Créer + préparer le courriel</button>
+  <button class="sec" onclick="show('home')">Accueil</button>
+</section>
+
+<section id="admin" class="card hidden">
+  <h2 id="adminTitle">Tableau</h2>
+  <div class="grid"><div>
+    <h3>Commandes</h3><div id="list"></div>
+  </div><div>
+    <h3>Dossier sélectionné</h3><div id="selected" class="box">Aucun dossier.</div>
+    <div id="actions"></div>
+    <h3>Progression</h3><div id="progress" class="steps"></div>
+  </div></div>
+  <button class="sec" onclick="render()">Rafraîchir</button>
+  <button class="bad" onclick="logout()">Déconnexion</button>
+  <button class="bad" onclick="clearAll()">Effacer tout</button>
+</section>
+
+<div class="footer">Rap Jungle — outil autonome • Courriels dirigés vers MEYDEN</div>
+</main>
+
+<script>
+const DEST_EMAIL="meydenprudhomme95@gmail.com";
+let role="",loginRole="",selected=null,orders=JSON.parse(localStorage.getItem("rapjungle_merch_orders")||"[]");
+const steps=["⚪ Nouveau dossier","🔵 Analyse Rap Jungle","🟣 Soumission envoyée","🟡 Dépôt reçu","🟠 Transmis en production","🔴 Production","🟢 Retour Rap Jungle","🟢 Distribution","🟢 Complété"];
+const $=id=>document.getElementById(id);
+
+function save(){localStorage.setItem("rapjungle_merch_orders",JSON.stringify(orders))}
+function show(id){["home","login","client","admin"].forEach(x=>$(x).classList.add("hidden"));$(id).classList.remove("hidden");calc();render()}
+function login(r){loginRole=r;show("login");$("loginTitle").innerText=r=="rapjungle"?"Connexion Rap Jungle":"Connexion Production"}
+function check(){let c=$("code").value;if((loginRole=="rapjungle"&&c=="1984")||(loginRole=="production"&&c=="2026")){role=loginRole;show("admin");$("adminTitle").innerText=role=="rapjungle"?"Admin Rap Jungle":"Portail Production"}else alert("Code incorrect")}
+function logout(){role="";selected=null;$("code").value="";show("home")}
+
+function calc(){
+  let q=Number($("qty")?.value)||0,p=Math.ceil(q/2),b=q-p;
+  if($("rule"))$("rule").innerText="RÈGLE 50/50 RAP JUNGLE\nLot total : "+q+"\nImprimé maintenant : "+p+"\nRéserve vierge : "+b+"\n\nObjectif : limiter le stock mort et garder une réserve pour futur drop, édition limitée ou réimpression.";
+}
+
+function createOrder(){
+  const q=Number($("qty").value)||0;
+  if(!$("clientName").value.trim()){alert("Entre le nom du client ou du projet.");return}
+  if(q<1){alert("La quantité doit être d'au moins 1.");return}
+  const p=Math.ceil(q/2),b=q-p,id="RJ-"+Date.now().toString().slice(-6);
+  const o={id,status:0,client:$("clientName").value.trim(),contact:$("contact").value.trim(),email:$("email").value.trim(),phone:$("phone").value.trim(),product:$("product").value,qty:q,printed:p,backup:b,notes:$("notes").value,history:["Commande créée par le client."]};
+  orders.push(o);save();selected=id;
+  alert("Commande Rap Jungle créée : "+id+"\nLe courriel va être préparé pour "+DEST_EMAIL+".");
+  emailOrder(o);
+}
+
+function render(){
+  if(!$("list"))return;
+  const visible=orders.filter(o=>role=="production"?[4,5].includes(o.status):true);
+  $("list").innerHTML=visible.length?"":"<p>Aucune commande.</p>";
+  visible.forEach(o=>{
+    const d=document.createElement("div");d.className="order";
+    d.innerHTML="<b>"+esc(o.id)+"</b><br>"+esc(o.client)+" — "+esc(o.product)+"<br>"+esc(steps[o.status])+"<br>Lot "+o.qty+" : "+o.printed+" imprimés / "+o.backup+" réserve<br><button class='pri' onclick=\"openOrder('"+o.id+"')\">Ouvrir</button>";
+    $("list").appendChild(d);
+  });
+  renderSelected();
+}
+function openOrder(id){selected=id;renderSelected()}
+function get(){return orders.find(o=>o.id==selected)}
+function text(o){return "DOSSIER "+o.id+"\n\nSTATUT : "+steps[o.status]+"\nCLIENT : "+o.client+"\nRESPONSABLE : "+(o.contact||"—")+"\nCOURRIEL CLIENT : "+(o.email||"—")+"\nTÉLÉPHONE : "+(o.phone||"—")+"\nPRODUIT : "+o.product+"\n\nRÈGLE 50/50\nLot total : "+o.qty+"\nImprimé maintenant : "+o.printed+"\nRéserve vierge : "+o.backup+"\n\nNOTES\n"+o.notes+"\n\nHISTORIQUE\n"+o.history.join("\n")}
+
+function renderSelected(){
+  let o=get();
+  if(!o){$("selected").innerText="Aucun dossier.";$("actions").innerHTML="";$("progress").innerHTML="";return}
+  $("selected").innerText=text(o);$("progress").innerHTML="";
+  steps.forEach((s,i)=>{let sp=document.createElement("span");sp.className="step s"+i+(i==o.status?" on":"");sp.innerText=s;$("progress").appendChild(sp)});
+  let a="";
+  if(role=="rapjungle"){
+    if(o.status==0)a+=btn(1,"Analyser");
+    if(o.status==1)a+=btn(2,"Envoyer soumission");
+    if(o.status==2)a+=btn(3,"Dépôt reçu");
+    if(o.status==3)a+=btn(4,"Transmettre en production");
+    if(o.status==6)a+=btn(7,"Distribuer");
+    if(o.status==7)a+=btn(8,"Compléter");
+  }
+  if(role=="production"){
+    if(o.status==4)a+=btn(5,"Démarrer production");
+    if(o.status==5)a+=btn(6,"Production terminée / retour Rap Jungle");
+  }
+  $("actions").innerHTML=a+"<button class='mail' onclick='emailOrder(get())'>Envoyer par courriel</button><button class='sec' onclick='copyOrder()'>Copier dossier</button>";
+}
+function btn(st,label){return "<button class='ok' onclick='adv("+st+")'>"+label+"</button>"}
+function adv(st){let o=get();if(!o)return;o.status=st;o.history.push(steps[st]);save();render()}
+function copyOrder(){const o=get();if(!o)return;navigator.clipboard.writeText(text(o)).then(()=>alert("Dossier copié"))}
+function clearAll(){if(confirm("Effacer toutes les commandes Rap Jungle stockées sur cet appareil?")){orders=[];save();selected=null;render()}}
+
+function emailOrder(o){
+  if(!o)return;
+  const subject=encodeURIComponent("Rap Jungle — dossier "+o.id+" — "+o.client);
+  const body=encodeURIComponent(text(o)+"\n\nDESTINATION INTERNE : "+DEST_EMAIL);
+  window.location.href="mailto:"+DEST_EMAIL+"?subject="+subject+"&body="+body;
+}
+
+function esc(v){return String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+
+$("upload").addEventListener("change",e=>{
+  let f=e.target.files[0];if(!f)return;
+  let r=new FileReader();r.onload=ev=>{$("logo").innerHTML="<img alt='Logo client' src='"+ev.target.result+"'>"};r.readAsDataURL(f)
+});
+$("size").addEventListener("input",e=>{$("logo").style.width=e.target.value+"px";$("logo").style.height=Math.round(e.target.value*.8)+"px"});
+let drag=false,ox=0,oy=0;
+$("logo").addEventListener("pointerdown",e=>{drag=true;$("logo").setPointerCapture(e.pointerId);let r=$("logo").getBoundingClientRect();ox=e.clientX-r.left;oy=e.clientY-r.top});
+$("logo").addEventListener("pointermove",e=>{if(!drag)return;let s=$("shirt").getBoundingClientRect(),l=$("logo");let x=e.clientX-s.left-ox,y=e.clientY-s.top-oy;x=Math.max(0,Math.min(x,$("shirt").clientWidth-l.offsetWidth));y=Math.max(0,Math.min(y,$("shirt").clientHeight-l.offsetHeight));l.style.left=x+"px";l.style.top=y+"px"});
+$("logo").addEventListener("pointerup",()=>drag=false);
+$("logo").addEventListener("pointercancel",()=>drag=false);
+
+calc();render();
+</script>
+</body></html>
